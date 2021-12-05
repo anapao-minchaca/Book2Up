@@ -1,0 +1,236 @@
+<html>
+<head>
+    <title>Book2 Up - Los mejores libros </title>
+     <link rel="stylesheet" href="css/signup.css"> 
+</head>
+
+<body>
+
+<nav>
+    <div class="header">
+        <img src="img/logo.png"/>
+    </div>
+    
+    <ul>
+         <li><a href="book2up.html">Inicio</a></li>
+         <li><a href="signup.html">Libros</a></li>
+         <li><a href="signup.html">Carrito</a></li>
+    </ul>
+</nav>
+
+<header style="background-image: url('img/bglog.png');">
+	<form method="POST" action="/signup"  onsubmit="submitHandle(this)" name="forma" class="form">
+        <h1>
+            Registro
+        </h1>
+
+       <div class="elementoForma">
+           <label for="Nombre">Nombre:</label>
+           <input type="text" name="nombre" id="nombre" onblur = "validarCont(this,0)" placeholder="Escribe tu nombre"/>
+       </div>
+       <div class="elementoForma">
+           <label for="Nombre">Apellidos:</label>
+           <input type="text" name="apellidos" id="apellidos" onblur = "validarCont(this,1)" placeholder="Escribe tus apellidos"/>
+       </div>
+       <div class="elementoForma">
+           <label for="Nombre">Email:</label>
+            <input type="text" name="mail" id="mail" onkeydown="mostrar()" onblur = "validarEmail(this),validarCont(this,2)" placeholder="hola@example.com"/>
+       </div>
+    
+       <!--         segundo bloque                  -->
+       <div id = "aiuda" style="display:none;"  >
+       <div class="elementoForma">
+           <label for="Nombre">Usuario:</label>
+            <input type="text" name="user" id="user" onblur = "validarCont(this,3)" placeholder="Escribe tu username"/>
+       </div>
+       <div class="elementoForma">
+        <label for="Nombre">Contraseña:</label>
+         <input type="password" name="contra" id="contra" onblur = "validarCont(this,4)" placeholder="Escribe tu contraseña"/>
+    </div>
+       <div class="elementoForma">
+           <label for="Nombre">Codigo Postal:</label>
+            <input type="text" name="codigo_postal" id="codigo_postal" placeholder="Escribe tu CP" onblur="rellenar(this),validarCont(this,5)" onkeydown="mostrar2()" id="codigo_postal" />
+       </div>
+       </div>
+    
+       <!--         tercer bloque                  -->
+       <div id = "aiuda2" style="display:none;"  >
+        <div class="elementoForma">
+            <label for="Nombre">Pais:</label>
+             <input type="text" name="pais" id="pais" onblur = "validarCont(this,6)" placeholder="Escribe tu pais"/>
+        </div>
+       <div class="elementoForma">
+           <label for="Nombre">Estado:</label>
+            <input type="text" name="estado" id="estado" onblur = "validarCont(this,7)" />
+       </div>
+       <div class="elementoForma">
+           <label for="Nombre">Municipio:</label>
+            <input type="text" name="municipio" id="municipio" onblur = "validarCont(this,8)"/>
+       </div>
+       <div class="elementoForma">
+           <label for="Nombre">Colonia:</label>
+            <input type="text" name="colonia" id="colonia" onmouseover="mostrar3()" onblur = "validarCont(this,9)" /> 
+       </div>
+       </div>
+    
+       <!--        cuarto bloque                  -->
+       <div id = "aiuda3" style="display:none;"  >
+       <div class="elementoForma">
+           <label for="Nombre">Numero de tarjeta:</label>
+            <input type="text" name="tarjeta" id="tarjeta" placeholder="Escribe tu numero de tarjeta" onblur="validarTarjeta(this),validarCont(this,10)"/>
+       </div>
+       <div class="custom-select">
+           <label for="Nombre">Fecha de expiración:</label>
+           <select name = "expiryMonth" id="expiryMonth" onblur="validarCont(this,11)">
+		    <option selected> Month </option>
+			<option value="january"> 01 </option>
+			<option value="february"> 02 </option>
+			<option value="march"> 03 </option>
+			<option value="april"> 04 </option>
+			<option value="may"> 05 </option>
+			<option value="june"> 06 </option>
+			<option value="july"> 07 </option>
+			<option value="august"> 08 </option>
+			<option value="september"> 09 </option>
+			<option value="october"> 10 </option>
+			<option value="novemeber"> 11 </option>
+			<option value="december"> 12 </option>
+		 </select>
+         <select name = "expiryYear" id="expiryYear" onblur="validarCont(this,12)"> 
+		    <option selected> Year </option>
+			<option value="2022"> 2022 </option>
+			<option value="2023"> 2023 </option>
+			<option value="2024"> 2024 </option>
+			<option value="2025"> 2025 </option>
+			<option value="2026"> 2026 </option>
+			<option value="2027"> 2027 </option>
+			<option value="2028"> 2028 </option>
+			<option value="2029"> 2029 </option>
+			<option value="2030"> 2030 </option>
+		 </select>
+       </div>
+       <div class="elementoForma">
+           <label for="Nombre">CVV:</label>
+            <input type="password" name="cvv" id="cvv" onblur="validarCVV(this),validarCont(this,13)" placeholder="Escribe tu CVV"/>
+       </div>
+       <input type="submit" value="Registrar" id="submit" class="button" disabled = true />
+       </div>
+    
+    </form>
+    <div class="center">
+        <p >
+            ¿Ya tienes una cuenta?
+        </p>
+        <a href="login.html" class="button">Iniciar Sesión</a>
+    </div>
+</header>
+
+<script>
+    let arregloForma = [];
+    arregloForma.length = 13;
+    //validar cp y autorellenar usando API
+    async function rellenar(field){
+        let cp = field.value
+        let token = '579b69c1-43bd-4de0-b7dc-6d9f8ff206d5'
+        try {
+        const res = await fetch(
+          `https://api.copomex.com/query/info_cp/${cp}?=simplified&token=${token}`
+        )
+        const data = await res.json()
+        if(data.error !== false){
+                const {response} = data[0]
+                console.log(response)
+                document.getElementById("estado").value = response.estado;
+                document.getElementById("municipio").value = response.municipio;
+                document.getElementById("colonia").value = response.asentamiento;
+                document.getElementById("pais").value = response.pais;
+
+            }
+        }catch (error){
+            console.log(error)
+        }
+    }
+
+    //validar estructura mail
+    function validarEmail(mail){
+    var formato = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if(mail.value.match(formato)){
+    return true;
+    }
+    else{
+    alert("Se ha ingresado una direccion invalida");
+    return false;
+    }
+    }
+    //validar numero tarjeta
+    function validarTarjeta(tarjeta){
+        const tam_tar = 16;
+
+        if(tarjeta.value.length < tam_tar || tarjeta.value.length > tam_tar){
+            alert("El tamano requerido es de 16 numeros")
+        }
+    }
+    //validar numero cvv
+    function validarCVV(cvv){
+        const tam_cvv = 3;
+
+        if(cvv.value.length < tam_cvv || cvv.value.length > tam_cvv){
+            alert("El tamano requerido es de 3 numeros")
+        }
+    }
+    //validar campos llenos
+    function validarCont(field,ident){
+        if(field.value.length > 0){
+            arregloForma[ident] = true
+            if(ident == 5)
+            {
+                arregloForma[6] = true
+                arregloForma[7] = true
+                arregloForma[8] = true
+                arregloForma[9] = true
+            }
+            
+        }
+
+    }
+
+    window.addEventListener("mousemove", () => 
+    {
+        var state = false
+        for(let i = 0; i<arregloForma.length; i++)
+        {
+            if(arregloForma[i] == null){
+                document.getElementById("submit").disabled = true;
+                state = false
+                console.log("No se han llenado todos los campos");
+                break;
+            }else if(arregloForma[i] == true)
+            {
+                state = true
+            }
+        }
+        if(state == true)
+        {
+            document.getElementById("submit").disabled = false;
+        } 
+    });
+    //mostrar siguiente bloque
+    function mostrar(){
+        document.getElementById("aiuda").style.display = "block";
+
+    }
+    //mostrar siguiente bloque
+    function mostrar2(){
+        document.getElementById("aiuda2").style.display = "block";
+    }
+    //mostrar siguiente bloque
+    function mostrar3(){
+        document.getElementById("aiuda3").style.display = "block";
+    }
+
+
+</script>
+
+</body>
+
+</html>

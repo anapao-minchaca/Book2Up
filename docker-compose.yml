@@ -1,0 +1,11 @@
+version: '3.8'
+
+services: 
+    proyectofinal: 
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: book2up
+        command: npm run dev
+        ports: 
+            - 3000:3000

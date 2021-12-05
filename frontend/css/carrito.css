@@ -1,0 +1,106 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("Roboto-Light.ttf");
+    }
+
+body {
+    background-color: #EFEFEF;
+    color: #2C405E;
+    margin: 0;
+    font-family: "Roboto";
+    }
+
+    nav {
+    background-color: transparent;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 15px;
+    }
+
+    .header img {
+    float:left;
+    width: 220px;
+    height: 100px;
+    
+    }
+
+    ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 150%;
+    }
+
+
+    ul li a {
+        margin: 0 10px;
+        color: #2C405E;
+        position: relative;
+        text-decoration: none;
+    }
+
+    ul li a:hover{
+        color: rgb(147, 161, 108);
+    }
+
+    header {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 63px);	
+    position: relative;
+    }
+
+    .button {
+        border: none;
+        color: #2C405E;
+        background-color: rgb(147, 161, 108);
+        position: relative;
+        display: flex;
+        margin: -8 10px;
+        padding: 10px 20px;
+        font-size: 94%;
+        cursor: pointer;
+        font-family: "Roboto";
+        border-radius: 16px;
+        
+      }
+
+      .button:hover {
+        background: rgba(205, 207, 197, 0.5);
+    }
+
+    table {
+        border-collapse: collapse;
+        padding: 20px;
+        width: 100%;
+      }
+      
+      td {
+        text-align: center;
+        padding: 10px;
+        font-size: 22px;
+      }
+      
+      th{
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 0px;
+      }
+      
+      tr:nth-child(odd) {
+        background-color: rgba(205, 207, 197, 0.5);
+      }
+
+      .total{
+        align-self: flex-end;
+        padding-right: 20px;
+      }

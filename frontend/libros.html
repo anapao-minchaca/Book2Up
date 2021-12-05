@@ -1,0 +1,95 @@
+<html>
+<head>
+    <title>Book2 Up - Los mejores libros </title>
+    <meta charset="UTF-8" />
+     <link rel="stylesheet" href="css/libros.css"> 
+</head>
+
+<body>
+
+<nav>
+    <div class="header" >
+        <img src="img/logo.png"/>
+    </div>
+    
+    <ul>
+         <li><a href="libros.html">Libros</a></li>
+         <li><a href="carrito.html">Carrito</a></li>
+         <form action="/logout" method="POST">
+        <input type="submit" name="logout" class = "button" value="Cerrar Sesion" />
+        </form>
+    </ul>
+</nav>
+<header id = "header" style="background-image: url('img/bgbooks.png');">
+    	
+</header>
+
+<script>
+
+
+function createBook(book){
+//declaramos estructura dinamica
+const div = document.createElement('div');
+const img = document.createElement('img');
+const div1 = document.createElement('div');
+const h1 = document.createElement('h1');
+const p = document.createElement('p');
+const p1 = document.createElement('p');
+const p2 = document.createElement('p');
+const button = document.createElement('button');
+const form = document.createElement('form');
+var textoB = document.createTextNode('Add to Cart');
+
+const header = document.getElementById('header');
+//ponemos atributos de elementos
+img.setAttribute ("src", `/img/${book.img}`);
+div.setAttribute("class", "card");
+div1.setAttribute("class", "info");
+p1.setAttribute("class", "price");
+button.setAttribute("type", "submit");
+form.setAttribute("method", "POST");
+form.setAttribute("action", "/a-carrito");
+button.setAttribute("onclick", `infolibros("${book.SKU}", "${book.titulo}", "${book.precio}")`);
+
+h1.innerHTML = book.titulo;
+p.innerHTML = book.autor;
+p1.innerHTML = "$" + book.precio;
+
+//append de cada elemento
+header.append(div);
+div.append(img);
+div.append(form);
+form.append(div1);
+form.append(p2);
+div1.append(h1);
+div1.append(p);
+div1.append(p1);
+button.append(textoB);
+p2.append(button);
+
+}
+
+// funcion para obtener los datos de los libros y usarlos para el carrito
+function infolibros(skulibro, titulolibro, preciolibro) {
+    const datos = {SKU: skulibro, titulo: titulolibro, precio: preciolibro};
+        fetch('http://localhost:3000/infoLibros', {
+            method: 'POST',
+            redirect: 'follow',
+            headers: {
+                'content-type': 'application/json',
+            },
+        body: JSON.stringify(datos),
+        }).then(response => window.location.href = response.url);
+}
+
+// funcion para hacer el display de los libros
+window.onload = async function mostrarlibros() {
+    const res = await fetch("http://localhost:3000/bookdata");
+    const datos = await res.json();
+    datos.forEach(book => createBook(book));
+};
+
+</script>
+</body>
+
+</html>

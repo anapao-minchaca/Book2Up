@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title>Book2 Up - Los mejores libros </title>
+     <link rel="stylesheet" href="css/signup.css"> 
+</head>
+
+<body>
+
+<nav>
+    <div class="header">
+        <img src="img/logo.png"/>
+    </div>
+    
+    <ul>
+        <form action="/logout" method="POST" class="noforma">
+            <input type="submit" name="logout" class = "boton" value="Cerrar Sesion"  />
+        </form>
+    </ul>
+</nav>
+
+<header style="background-image: url('img/bglog.png');">
+	<form method="POST" action="/agregar"  onsubmit="submitHandle(this)" name="forma" class="form">
+        <h1>
+            Añadir Libro
+        </h1>
+
+       <div class="elementoForma">
+           <label for="Nombre">Titulo:</label>
+           <input type="text" name="titulo" id="titulo" onblur = "validarCont(this,0)" placeholder="Escribe el titulo del libro"/>
+       </div>
+       <div class="elementoForma">
+           <label for="Nombre">Autor:</label>
+           <input type="text" name="autor" id="autor" onblur = "validarCont(this,1)" placeholder="Escribe el nombre del autor"/>
+       </div>
+       <div class="elementoForma">
+           <label for="Nombre">Sinopsis:</label>
+            <input type="text" name="sin" id="sin" onkeydown="mostrar()" onblur = "validarCont(this,2)" placeholder="Escribe la sinopsis del libro"/>
+       </div>
+    
+       <!--         segundo bloque                  -->
+       <div id = "aiuda" style="display:none;"  >
+       <div class="elementoForma">
+           <label for="Nombre">Precio:</label>
+            <input type="text" name="precio" id="precio" onblur = "validarCont(this,3)" placeholder="Escribe el precio del libro"/>
+       </div>
+       <div class="elementoForma">
+        <label for="Nombre">SKU:</label>
+         <input type="text" name="SKU" id="SKU" onblur = "validarCont(this,4)" placeholder="Escribe el SKU del libro"/>
+        </div>
+        <div class="elementoForma">
+            <label for="Nombre">Imagen:</label>
+             <input type="text" name="img" id="img" onblur = "validarCont(this,5)" placeholder="Escribe el nombre de la imagen + .jpg/.png"/>
+            </div>
+        <input type="submit" value="Registrar" id="submit" class="button" onclick="alerta()" disabled = true />
+       </div>
+    
+    </form>
+</header>
+
+<script>
+    let arregloForma = [];
+    arregloForma.length = 5;
+    //validar campos llenos
+    function validarCont(field,ident){
+        if(field.value.length > 0){
+            arregloForma[ident] = true
+        }
+    }
+
+    window.addEventListener("mousemove", () => 
+    {
+        var state = false
+        for(let i = 0; i<arregloForma.length; i++)
+        {
+            if(arregloForma[i] == null){
+                document.getElementById("submit").disabled = true;
+                state = false
+                console.log("No se han llenado todos los campos");
+                break;
+            }else if(arregloForma[i] == true)
+            {
+                state = true
+            }
+        }
+        if(state == true)
+        {
+            document.getElementById("submit").disabled = false;
+        } 
+    });
+    //mostrar siguiente bloque
+    function mostrar(){
+        document.getElementById("aiuda").style.display = "block";
+
+    }
+
+    //mostrar alerta
+    function alerta(){
+        alert("Libro agregado a la base de datos");
+    }
+
+</script>
+
+</body>
+
+</html>
